@@ -102,7 +102,7 @@ public class Trip {
         this.kmsDriven = kmsDriven;
     }
 
-    @CreationTimestamp
+    @NotNull
     public Date getTripStartTime() {
         return tripStartTime;
     }
@@ -110,7 +110,7 @@ public class Trip {
         this.tripStartTime = tripStartTime;
     }
 
-    @UpdateTimestamp
+    @NotNull
     public Date getTripEndTime() {
         return tripEndTime;
     }

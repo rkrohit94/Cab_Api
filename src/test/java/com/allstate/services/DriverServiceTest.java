@@ -1,7 +1,9 @@
 package com.allstate.services;
 
+import com.allstate.entities.Car;
 import com.allstate.entities.City;
 import com.allstate.entities.Driver;
+import com.allstate.entities.Trip;
 import com.allstate.enums.Gender;
 import org.junit.After;
 import org.junit.Before;
@@ -34,11 +36,6 @@ public class DriverServiceTest {
         driver.setName("bob");
         driver.setGender(Gender.MALE);
         driver.setAge(30);
-        City city=new City();
-        city.setId(1);
-        List<City> alist=new ArrayList<City>();
-        alist.add(city);
-        driver.setCity(alist);
     }
 
     @After
@@ -87,7 +84,7 @@ public class DriverServiceTest {
         assertNull(result);
     }
 
-    @Test
+    @Test(expected = org.springframework.dao.DataIntegrityViolationException.class)
     public void shouldDeleteDriverById() throws Exception {
         this.driverService.deleteById(1);
         Driver result= this.driverService.findById(1);
@@ -109,5 +106,22 @@ public class DriverServiceTest {
         Driver driver1 =this.driverService.findById(1);
         List<City> cityList = driver1.getCity();
         assertEquals(1,cityList.size());
+    }
+
+    @Test
+    @Transactional
+    public void shouldFindListOfCarsOfDriver() throws Exception{
+        Driver driver1 =this.driverService.findById(1);
+        List<Car> carsList = driver1.getCarsList();
+        assertEquals(2,carsList.size());
+    }
+
+    @Test
+    @Transactional
+    public void shouldFindListOfTripsByDriver() throws Exception {
+        Driver driver1 =this.driverService.findById(1);
+        List<Trip> tripList = driver1.getTripList();
+        assertEquals(2,tripList.size());
+
     }
 }

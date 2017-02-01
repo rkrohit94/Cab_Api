@@ -2,6 +2,8 @@ package com.allstate.services;
 
 import com.allstate.entities.Car;
 import com.allstate.entities.City;
+import com.allstate.entities.Driver;
+import com.allstate.entities.Trip;
 import com.allstate.enums.CarType;
 import org.junit.After;
 import org.junit.Before;
@@ -12,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -23,6 +26,8 @@ public class CarServiceTest {
 
     @Autowired
     private CarService carService;
+    @Autowired
+    private DriverService driverService;
 
     private Car car;
 
@@ -33,7 +38,8 @@ public class CarServiceTest {
         car.setModel("S series");
         car.setYear(2008);
         car.setType(CarType.BASIC);
-
+        Driver driver = this.driverService.findById(1);
+        car.setDriver(driver);
     }
 
     @After
@@ -82,10 +88,25 @@ public class CarServiceTest {
         assertEquals(0,result.size());
     }
 
-    @Test
+    @Test(expected = org.springframework.dao.DataIntegrityViolationException.class)
     public void shouldDeleteCarById() throws Exception {
         this.carService.deleteById(1);
         Car result= this.carService.findById(1);
-        assertNull(result);
+        assertNotNull(result);
+    }
+
+    @Test
+    public void shouldFindDriverOfCar() throws Exception {
+        Car car=this.carService.findById(1);
+        Driver driver=car.getDriver();
+        assertEquals(1,driver.getId());
+    }
+
+    @Test
+    @Transactional
+    public void shouldFindListOfTripsDrivenByCar() throws Exception {
+        Car car=this.carService.findById(1);
+        List<Trip> tripList=car.getTripList();
+        assertEquals(2,tripList.size());
     }
 }

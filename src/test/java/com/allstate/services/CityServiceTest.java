@@ -2,6 +2,7 @@ package com.allstate.services;
 
 import com.allstate.entities.City;
 import com.allstate.entities.Driver;
+import com.allstate.entities.Passenger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -83,7 +84,7 @@ public class CityServiceTest {
         assertNull(result);
     }
 
-    @Test
+    @Test(expected = org.springframework.dao.DataIntegrityViolationException.class)
     public void shouldDeleteCityById() throws Exception {
         this.cityService.deleteById(1);
         City result= this.cityService.findById(1);
@@ -92,10 +93,18 @@ public class CityServiceTest {
 
     @Test
     @Transactional
-    public void shouldReturnListOfDriverInCity() throws Exception {
+    public void shouldReturnListOfDriversInCity() throws Exception {
         City city1 =this.cityService.findById(1);
         System.out.println(city1.getName());
         List<Driver> driverList = city1.getDrivers();
         assertEquals(2,driverList.size());
+    }
+
+    @Test
+    @Transactional
+    public void shouldReturnListOfPassengersInCity() throws Exception {
+        City city1 =this.cityService.findById(1);
+        List<Passenger> passengerList = city1.getPassengerList();
+        assertEquals(2,passengerList.size());
     }
 }

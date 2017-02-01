@@ -23,6 +23,7 @@ public class City {
     private Date modified;
     private List<Driver> drivers;
     private List<Trip> tripList;
+    private List<Passenger> passengerList;
 
     public City() {
     }
@@ -110,5 +111,14 @@ public class City {
     }
     public void setTripList(List<Trip> tripList) {
         this.tripList = tripList;
+    }
+
+    @OneToMany(mappedBy = "city")
+    @JsonIgnore
+    public List<Passenger> getPassengerList() {
+        return passengerList;
+    }
+    public void setPassengerList(List<Passenger> passengerList) {
+        this.passengerList = passengerList;
     }
 }

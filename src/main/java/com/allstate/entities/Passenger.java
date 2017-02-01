@@ -23,6 +23,8 @@ public class Passenger {
     private Date created;
     private Date modified;
     private List<Trip> tripList;
+    private City city;
+    private List<Driver> driverList;
 
 
     public Passenger() {
@@ -103,5 +105,26 @@ public class Passenger {
     }
     public void setTripList(List<Trip> tripList) {
         this.tripList = tripList;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    public City getCity() {
+        return city;
+    }
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    @ManyToMany
+    @JoinTable(name = "trips",
+            joinColumns = @JoinColumn(name = "passenger_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "driver_id", referencedColumnName = "id"))
+    @JsonIgnore
+    public List<Driver> getDriverList() {
+        return driverList;
+    }
+    public void setDriverList(List<Driver> driverList) {
+        this.driverList = driverList;
     }
 }

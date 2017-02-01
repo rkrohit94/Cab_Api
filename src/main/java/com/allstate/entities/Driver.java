@@ -24,7 +24,9 @@ public class Driver {
     private Date created;
     private Date modified;
     private List<City> city;
+    private List<Car> carsList;
     private List<Trip> tripList;
+    private List<Passenger> passengerList;
 
     public Driver() {
     }
@@ -115,5 +117,23 @@ public class Driver {
     }
     public void setTripList(List<Trip> tripList) {
         this.tripList = tripList;
+    }
+
+    @OneToMany(mappedBy = "driver")
+    @JsonIgnore
+    public List<Car> getCarsList() {
+        return carsList;
+    }
+    public void setCarsList(List<Car> carsList) {
+        this.carsList = carsList;
+    }
+
+    @ManyToMany(mappedBy = "driverList")
+    @JsonIgnore
+    public List<Passenger> getPassengerList() {
+        return passengerList;
+    }
+    public void setPassengerList(List<Passenger> passengerList) {
+        this.passengerList = passengerList;
     }
 }

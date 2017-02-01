@@ -23,6 +23,7 @@ public class Car {
     private Date created;
     private Date modified;
     private List<Trip> tripList;
+    private Driver driver;
 
     public Car() {
     }
@@ -101,5 +102,15 @@ public class Car {
     }
     public void setTripList(List<Trip> tripList) {
         this.tripList = tripList;
+    }
+
+
+    @ManyToOne
+    @JoinColumn(name="driver_id")
+    public Driver getDriver() {
+        return driver;
+    }
+    public void setDriver(Driver driver) {
+        this.driver = driver;
     }
 }
