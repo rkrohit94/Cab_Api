@@ -20,7 +20,7 @@ public class ReviewService {
        return this.reviewRepository.save(review);
     }
 
-//    public Review findReviewByReviewer(String reviewer){
-//        return this.reviewRepository.findReviewByReviewer(reviewer);
-//    }
+    public Review findReviewByReviewer(String reviewer){
+        return this.reviewRepository.findReviewByReviewer(reviewer);
+    }
 }

@@ -7,6 +7,6 @@ CREATE TABLE `reviews` (
   `created`        DATETIME                   NOT NULL     DEFAULT         now(),
   `modified`       DATETIME                   NOT NULL     DEFAULT         now(),
   `driver_id`      INT                        NOT NULL,
-  `passenger_id`   INT                       NOT NULL,
+  `passenger_id`   INT                        NOT NULL,
 
   PRIMARY KEY (`id`));

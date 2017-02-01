@@ -50,11 +50,11 @@ public class ReviewServiceTest {
       assertEquals(1,result.getId());
     }
 
-//    @Test
-//    public void findReviewByReviewer() throws Exception {
-//        Review result=this.reviewService.findReviewByReviewer("DRIVER");
-//        assertNotNull(result);
-//        assertEquals(1,result.getId());
-//    }
+    @Test
+    public void findReviewByReviewer() throws Exception {
+        Review result=this.reviewService.findReviewByReviewer("DRIVER");
+        assertNotNull(result);
+        assertEquals(1,result.getId());
+    }
 
 }

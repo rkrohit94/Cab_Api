@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IReviewRepository extends CrudRepository<Review,Integer>{
-  //  public Review findReviewByReviewer(String reviewer);
+    public Review findReviewByReviewer(String reviewer);
 }
