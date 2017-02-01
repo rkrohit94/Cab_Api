@@ -44,8 +44,6 @@ public class TripServiceTest {
         trip = new Trip(car,city,driver,passenger);
         trip.setKmsDriven(40);
         trip.setTip(10);
-        trip.setTripCost(100);
-        trip.setTotalTripCost(110);
         trip.setTripStartTime(new SimpleDateFormat( "yyyyMMdd" ).parse( "20170201" ));
         trip.setTripEndTime(new SimpleDateFormat( "yyyyMMdd" ).parse( "20170201" ));
     }
@@ -58,7 +56,6 @@ public class TripServiceTest {
     @Test
     public void shouldCreateTrip() throws Exception {
         Trip result = this.tripService.createTrip(trip);
-        System.out.println("DAte parsing***************"+result.getTripStartTime());
         assertEquals(3,result.getId());
     }
 

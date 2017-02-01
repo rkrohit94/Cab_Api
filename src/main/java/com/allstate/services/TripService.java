@@ -1,8 +1,7 @@
 package com.allstate.services;
 
-import com.allstate.entities.Driver;
-import com.allstate.entities.Passenger;
-import com.allstate.entities.Trip;
+import com.allstate.entities.*;
+import com.allstate.enums.CarType;
 import com.allstate.repositories.IDriverRepository;
 import com.allstate.repositories.ITripRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,8 @@ public class TripService {
     private ITripRepository tripRepository;
     private DriverService driverService;
     private PassengerService passengerService;
+    private CarService carService;
+    private CityService cityService;
 
     @Autowired
     public void setDriverService(DriverService driverService) {
@@ -32,11 +33,32 @@ public class TripService {
         this.passengerService = passengerService;
     }
 
+    @Autowired
+    public void setCarService(CarService carService) {
+        this.carService = carService;
+    }
+    @Autowired
+    public void setCityService(CityService cityService) {
+        this.cityService = cityService;
+    }
+
     public Trip createTrip(Trip trip){
         Driver driver = this.driverService.findById(trip.getDriver().getId());
         Passenger passenger=this.passengerService.findById(trip.getPassenger().getId());
-            if (driver.getViolations() < 3 && passenger.getCreditBalance() > trip.getTotalTripCost()) {
-                passenger.setCreditBalance(passenger.getCreditBalance() - trip.getTotalTripCost());
+        Car car =this.carService.findById(trip.getCar().getId());
+        City city=this.cityService.findById(trip.getCity().getId());
+        int tripCost = city.getDayRate()*trip.getKmsDriven();
+
+        if(car.getType()== CarType.LUX) {
+            tripCost = (5 / 100) * tripCost;
+        }
+
+         int totalTripCost=tripCost + (trip.getTip() * tripCost)/100;
+
+          trip.setTripCost(tripCost);
+          trip.setTotalTripCost(totalTripCost);
+            if (driver.getViolations() < 3 && passenger.getCreditBalance() > totalTripCost) {
+                passenger.setCreditBalance(passenger.getCreditBalance() - totalTripCost);
                 return this.tripRepository.save(trip);
             }
             else
