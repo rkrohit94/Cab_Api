@@ -52,7 +52,7 @@ public class ReviewServiceTest {
 
     @Test
     public void findReviewByReviewer() throws Exception {
-        Review result=this.reviewService.findReviewByReviewer("DRIVER");
+        Review result=this.reviewService.findReviewByReviewer(ReviewType.DRIVER);
         assertNotNull(result);
         assertEquals(1,result.getId());
     }
