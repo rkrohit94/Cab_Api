@@ -27,6 +27,7 @@ public class Driver {
     private List<Car> carsList;
     private List<Trip> tripList;
     private List<Passenger> passengerList;
+    private List<Review> reviewList;
 
     public Driver() {
     }
@@ -135,5 +136,14 @@ public class Driver {
     }
     public void setPassengerList(List<Passenger> passengerList) {
         this.passengerList = passengerList;
+    }
+
+    @OneToMany(mappedBy = "driver")
+    @JsonIgnore
+    public List<Review> getReviewList() {
+        return reviewList;
+    }
+    public void setReviewList(List<Review> reviewList) {
+        this.reviewList = reviewList;
     }
 }
